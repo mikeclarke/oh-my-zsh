@@ -13,6 +13,8 @@ function agp {
 }
 function asp {
   export AWS_DEFAULT_PROFILE=$1
+  export AWS_ACCESS_KEY_ID=$(awk -v FS='\n' -v RS='[' "/$1/ { print \$2 }" ~/.aws/credentials | sed 's/aws_access_key_id = \(.*\)/\1/')
+  export AWS_SECRET_ACCESS_KEY=$(awk -v FS='\n' -v RS='[' "/$1/ { print \$3 }" ~/.aws/credentials | sed 's/aws_secret_access_key = \(.*\)/\1/')
   export RPROMPT="<aws:$AWS_DEFAULT_PROFILE>"
 }
 function aws_profiles {
